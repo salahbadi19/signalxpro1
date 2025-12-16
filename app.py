@@ -1242,8 +1242,17 @@ def on_disconnect():
 """
 
 # === Run Server ===
+# === Run Server ===
 if __name__ == '__main__':
     print("✅ SignalXPro Admin Panel جاهز للتشغيل")
-    print("🔗 URL: http://localhost:5000")
+    print("🔗 URL: http://localhost:5000 (محليًا)")
     print("💾 قاعدة البيانات: signalxpro.db")
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(
+        app,
+        host='0.0.0.0',
+        port=port,
+        debug=False,
+        allow_unsafe_werkzeug=True  # ← هذا يحل مشكلة Render
+    )
